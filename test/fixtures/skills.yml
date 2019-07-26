@@ -1,0 +1,11 @@
+skill_one:
+  name: HTML
+  applicant_id: 1
+
+skill_two:
+  name: CSS
+  applicant_id: 1
+
+skill_three:
+  name: Bubble_Sorts
+  applicant_id: 2

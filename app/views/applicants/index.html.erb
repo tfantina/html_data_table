@@ -1,0 +1,44 @@
+<% content_for :title, "Job Applicants Report"%>
+
+<div id="page">
+    <table class="job-applicants">
+        <thead>
+            <tr>
+                <th>Job</th>
+                <th>Applicant Name</th>
+                <th>Email Address</th>
+                <th>Website</th>
+                <th>Skills</th>
+                <th>Cover Letter Paragraph</th>
+            </tr>      
+        </thead>
+        <tbody>
+        <% # the job row is the same height as all of the skills of the applicants %>
+        <% @jobs.each do |job| %>
+        <!-- <%= job.name %> -->
+            <tr>
+                <td rowspan="<%= job_skill_count(job) %>"><%= job.name %></td>
+            <% job.applicants.each do |a| %>
+                <td rowspan="<%= applicant_skill_count(a) %>" class="applicant-name"><%= a.name %></td>
+                <td rowspan="<%= applicant_skill_count(a) %>"><%= mail(a.email) %></td>
+                <td rowspan="<%= applicant_skill_count(a) %>"><%= link(a.website) %></td>  
+                <td rowspan="1"> <%= a.skills.first.name  %></td>
+                <td rowspan="<%= applicant_skill_count(a) %>"><%= a.cover_letter%></td>
+            </tr>  
+            <% #after the first row if the applicant has other skills they displayed on subsiquent rows%>
+                <% if a.skills.count > 1%> 
+                    <% a.skills.drop(1).each do |skill| %>
+                        <tr><td><%= skill.name %></td></tr>
+                    <% end %>
+                <% end %>
+            <% end %> 
+        <% end %>
+        </tbody>
+         <tfoot>
+            <tr>
+                <td colspan="6"><%= @total_applicants %> Applicants, <%= @unique_skills %> Unique Skills</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
